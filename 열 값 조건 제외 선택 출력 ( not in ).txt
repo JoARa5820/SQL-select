@@ -1,0 +1,16 @@
+[4-1]
+[Answer]
+select *
+from employees
+where manager_id<>100
+and manager_id<>101
+and manager_id<>200;
+
+select *
+from employees
+where manager_id not in(100,101,200);
+
+[Answer]
+select last_name, job_id
+from employees
+where job_id not in ('IT_PROG', 'ST_CLERK' , 'SA_REP');

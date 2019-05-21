@@ -1,0 +1,20 @@
+[64]
+관리자가 아닌 사원들의 정보를 출력해 주세요
+
+[Answer]
+
+--## T and null 이기 때문에 공집합이 나온다.
+--## not in을 사용하려는데 서브쿼리 안에 널값이 있으면 공집합이 나온다.
+--## 서브쿼리 안에 널값이 있으면 공집합이 나온다. T and null 이기 때문에 공집합이 나온다.
+
+select *
+from employees
+where employee_id not in
+(select manager_id from employees
+where manager_id is not null);
+
+select *
+from employees
+where employee_id <> all
+(select manager_id from employees
+where manager_id is not null);

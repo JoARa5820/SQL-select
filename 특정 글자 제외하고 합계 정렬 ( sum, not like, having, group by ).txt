@@ -1,0 +1,12 @@
+[38]
+job_id별로 총액급여를 구합니다.
+단 CLERK글자가 있는 job_id는 제외하고(=where절로 조절하자. having절 쓰면 안됨)
+총액급여는 13000가 넘는 정보를 출력하면서 총액 급여를 기준으로 내림차순 정렬하세요.
+
+[Answer]
+select job_id, sum(salary)
+from employees
+where job_id not like '%CLERK%'
+having sum(salary) > 13000
+group by job_id
+order by 2 desc;

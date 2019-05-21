@@ -1,0 +1,6 @@
+[6]
+departments 테이블에 있는 데이터에서 department_name , manager_id 컬럼을 갖고 화면 결과처럼 출력하는 쿼리문장을 만드세요.
+
+[Answer]
+select department_name || q'[ Department''s Manager Id: ]' || manager_id as "Department and Manager"
+from departments;

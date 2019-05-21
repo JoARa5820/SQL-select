@@ -1,0 +1,25 @@
+[51]
+사원들의 사번, 급여, 급여등급, 부서이름, 근무 도시 정보를 출력하세요.
+부서배치를 받지 않는 사원도 포함시켜주세요.
+
+[Answer]
+
+select e.employee_id, e.salary, j.grade_level, d.department_name, l.city
+from employees e, departments d, job_grades j, locations l
+where e.salary between j.lowest_sal and j.highest_sal 
+and e.department_id = d.department_id(+)
+//* ## 여기서 e.department_id는 select절의 e.department_id가 아님, 위쪽(where e.salary between j.lowest_sal and j.highest_sal)에서 조인되서 나온 e.department_id임. *//
+and d.location_id = l.location_id(+);
+
+
+
+SELECT e.employee_id, e.salary, j.grade_level, d.department_name, l.city	-1번
+
+FROM employees e LEFT OUTER JOIN departments d
+ON e.department_id = d.department_id				-3번
+
+LEFT OUTER JOIN locations l
+ON d.location_id = l.location_id					-4번
+
+LEFT OUTER JOIN job_grades j					-2번 : "LEFT OUTER JOIN" ## 여기서 left outer join은 의미가 없음. join만 써도 됨,어차피 모두가 급여를 받기 때문에 모두 grade가 null값이 아니기 때문
+ON e.salary between j.lowest_sal and j.highest_sal;

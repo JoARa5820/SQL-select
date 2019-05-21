@@ -1,0 +1,35 @@
+[80]
+급여와 커미션이 location_id가 1700 에 있는 사원의 급여 및 커미션과 일치하는 사원의 last_name, department_name, salary를 출력해주세요.
+
+[Answer]
+
+select e.last_name, d.department_name, e.salary
+from employees e, departments d
+where e.department_id = d.department_id
+and (e.salary, nvl(e.commission_pct,0)) in
+(select e.salary, nvl(e.commission_pct,0)
+from employees e join departments d
+on e.department_id = d.department_id
+where d.location_id = 1700);
+
+## 여기서 핵심은 nvl(commission_pct,0)임
+# 서브쿼리 절에서 값만 가져나올때는 메인쿼리와 서브쿼리의 별칭이 같아도 상관 없음. (e,d)
+
+
+
+[81]
+Johnson와 동일한 급여 및 커미션을 받는 모든 사원의 last_name, hire_date, salary, commission_pct를 표시하는 query 를 작성합니다.
+단 결과에 Johnson 를 표시하지 마십시오.
+
+[Answer]
+
+select last_name, hire_date, salary, commission_pct
+from employees
+where (salary, nvl(commission_pct,0)) in
+(select salary, nvl(commission_pct,0)
+from employees
+where last_name = 'Johnson')
+and last_name != 'Johnson';
+
+
+## 여기서 핵심은 nvl(commission_pct,0)임

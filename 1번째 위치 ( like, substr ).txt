@@ -1,0 +1,23 @@
+[19]
+employees 테이블에서 department_id(부서코드)가 50번 사원들 중에 last_name에 두번째 위치에 "a"글자가 있는 사원들을 조회하세요. 
+
+[Answer]
+select *
+from employees
+where department_id=50
+and last_name like '_a%';
+
+select *
+from employees
+where department_id=50
+and substr(last_name,2,1)='a';
+
+
+
+[22]
+employees(사원)테이블에 있는 last_name의 세번째 문자가 'a' 또는 'e'가 포함된 모든 사원의 last_name을 조회하세요.
+
+[Answer]
+select last_name
+from employees
+where substr(last_name,3,1) in ('a','e');

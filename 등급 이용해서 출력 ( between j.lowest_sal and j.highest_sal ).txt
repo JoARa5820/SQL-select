@@ -1,0 +1,23 @@
+[50]
+사원들의 사번, 급여, 급여등급, 부서이름을 출력하세요.
+부서배치를 받지 않는 사원은 제외시켜주세요.
+
+[Answer]
+
+***********************************************************
+# 순서 상관은 없음
+
+where e.department_id = d.department_id
+and e.salary between j.lowest_sal and j.highest_sal;
+***********************************************************
+
+select e.employee_id, e.salary, j.grade_level, d.department_name
+from employees e, departments d, job_grades j
+where e.department_id = d.department_id
+and e.salary between j.lowest_sal and j.highest_sal;
+
+select e.employee_id, e.salary, j.grade_level, d.department_name
+from employees e join departments d
+on e.department_id = d.department_id
+join job_grades j
+on e.salary between j.lowest_sal and j.highest_sal;

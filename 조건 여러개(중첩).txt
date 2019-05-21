@@ -1,0 +1,16 @@
+[17]
+employees 테이블에서 job_id 컬럼의 값이 SA_REP 또는 AD_PRES 사원들 중에 급여가 10000 초과 한 사원들의 모든 정보를 출력하세요.
+
+[Answer]
+select *
+from employees
+where salary>10000
+and (job_id='SA_REP'
+or job_id='AD_PRES');
+--또는
+select *
+from employees
+where job_id in('SA_REP','AD_PRES')
+and salary>10000;
+
+--(and 가 or 보다 높음. 따라서 or보다 and가 먼저 돌아감, 먼저 돌아갈 부분을 괄호로 표현해주자.)

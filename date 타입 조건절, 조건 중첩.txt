@@ -1,0 +1,16 @@
+[16]
+employees 테이블에 있는 데이터에서 job_id컬럼의 값이  SA로 시작하고  10000 이상의 salary(급여)를 받고 2005년도에 입사한(hire_date) 모든 사원들의 정보를 출력하세요.
+
+[Answer]
+select *
+from employees
+where job_id like 'SA%'
+and salary>=10000
+and hire_date between to_date('2005/01/01','yyyy/mm/dd') and to_date('2005/12/31 23:59:59','yyyy/mm/dd hh24:mi:ss');
+
+select *
+from employees
+where salary>=10000
+and job_id like 'SA%'
+and hire_date >= to_date('2005-01-01','yyyy-mm-dd')
+and hire_date < to_date('2006-01-01','yyyy-mm,dd');

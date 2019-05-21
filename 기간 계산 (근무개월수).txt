@@ -1,0 +1,7 @@
+[21]
+15년 이상 근무한 사원들의 employee_id(사원번호), hire_date(입사일), 근무개월수를 조회하세요.
+
+[Answer]
+select employee_id, hire_date, months_between(sysdate, hire_date)
+from employees
+where months_between(sysdate,hire_date)>=12*15;

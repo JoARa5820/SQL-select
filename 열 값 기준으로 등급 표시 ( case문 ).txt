@@ -1,0 +1,26 @@
+[34]
+JOB_ID 열의 값을 기준으로 모든 사원의 등급(GRADE)을 표시하는 query 를 작성하세요.
+
+<화면예>
+
+JOB_ID	 	GRADE
+-----------		---------	
+AD_PRES 		A
+ST_MAN 		B
+IT_PROG 		C
+SA_REP 		D
+ST_CLERK 	E
+그외 JOB들은	Z
+
+
+[Answer]
+select job_id,
+	case job_id
+		when 'AD_PRES' then 'A'
+		when 'ST_MAN' then 'B'
+		when 'IT_PROG' then 'C'
+		when 'SA_REP' then 'D'
+		when 'ST_CLERK' then 'E'
+	else 'Z'
+	end "GRADE"
+from employees;

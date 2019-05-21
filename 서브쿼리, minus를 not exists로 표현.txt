@@ -1,0 +1,38 @@
+[84]
+부서가 소재하지 않는 '국가의 리스트가 필요'합니다. 해당 국가의 country_id, country_name을 출력해주세요.
+
+desc countries
+desc departments
+desc locations
+location_id(departments, locations), country_id(locations, countries)
+
+
+--# 아래 두 문장을 exists, not exists로 '소재하고있는', '소재하지않는'을 만들어 낼 수 있음
+1.select country_id, country_name
+from countries;
+
+2.select l.*
+from lacations l, departments d
+where d.location_id = l.location_id
+-------------------------------------
+
+[Answer]
+
+--# 아래 답은 별로 안좋음
+SELECT country_id, country_name
+FROM countries
+MINUS
+SELECT l.country_id, c.country_name
+FROM departments d, locations l, countries c
+WHERE l.country_id = c.country_id
+AND d.location_id = l.location_id;
+
+
+--# 이것이 더 좋음. country 테이블이 한번 나오기 때문에
+SELECT country_id, country_name
+FROM countries c
+WHERE NOT EXISTS(
+        SELECT 'x'
+        FROM locations l , departments d
+        WHERE d.location_id = l.location_id
+        AND l.country_id = c.country_id);

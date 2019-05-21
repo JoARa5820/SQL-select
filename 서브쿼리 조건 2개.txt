@@ -1,0 +1,8 @@
+[79]
+부서 번호와 급여가 커미션을 받는 사원의 부서 번호 및 급여와 일치하는 모든 사원의 last_name, department_id, salary 를 표시하는 query 를 작성하세요.
+
+[Answer]
+
+select last_name, department_id, salary
+from employees
+where (department_id, salary) in (select department_id, salary from employees where commission_pct is not null);

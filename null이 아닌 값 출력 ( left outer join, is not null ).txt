@@ -1,0 +1,16 @@
+[44]
+commission_pct에 null이 아닌 모든 사원의 last_name, department_name, location_id, city를 표시하기 위한 query 를 작성합니다.
+
+[Answer]
+select e.last_name, d.department_name, l.location_id, l.city
+from employees e, departments d, locations l
+where e.department_id = d.department_id(+)
+and d.location_id = l.location_id(+)
+and e.commission_pct is not null;
+
+select e.last_name, d.department_name, l.location_id, l.city
+from employees e left outer join departments d
+on e.department_id = d.department_id
+left outer join locations l
+on d.location_id = l.location_id
+and e.commission_pct is not null;

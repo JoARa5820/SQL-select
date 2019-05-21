@@ -1,0 +1,15 @@
+[36]
+모든 사원의 최고급여, 최저급여, 합계 및 평균 급여를 찾습니다. 
+열 레이블을 각각 Maximum, Minimum, Sum 및 Average로 지정합니다. 
+결과를 소수점은 반올림해서 정수값으로 출력하세요.
+
+  	 Maximum    Minimum        Sum    	Average
+  -------------- --------------   ----------   ------------
+        24000          2100         691416        6462
+
+
+[Answer]
+select max(salary) "Maximum", min(salary) "Minimum", sum(salary) "Sum", round(avg(salary)) "Average"
+from employees;
+
+--## round(avg(salary)) = round(avg(salary),0) : 반올림&절삭

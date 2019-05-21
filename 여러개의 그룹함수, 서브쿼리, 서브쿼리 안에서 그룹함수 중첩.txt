@@ -1,0 +1,23 @@
+[74]
+평균 급여가 가장 높은 부서의 부서 번호와 최고, 최저, 평균 급여를 출력하세요.
+
+[Answer]
+select department_id, max(salary), min(salary), avg(salary)
+from employees
+group by department_id
+having avg(salary) = (select max(avg(salary))
+		from employees
+		group by department_id);
+
+
+
+[76]
+사원 채용 수가 가장 많은 요일을 출력해주세요.
+
+[Answer]
+select to_char(hire_date, 'day')
+from employees
+group by to_char(hire_date, 'day')
+having count(*) = (select max(count(*))
+                             from employees
+                             group by to_char(hire_date, 'day'));

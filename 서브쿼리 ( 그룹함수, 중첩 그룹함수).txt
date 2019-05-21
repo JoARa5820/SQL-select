@@ -1,0 +1,70 @@
+[53]
+141번 사원의 job_id와 동일한 job_id를 가진 사원들 중에 141번 사원의 급여보다 더 많이 받는 사원을 출력해주세요.
+
+[Answer]
+select *
+from employees
+where job_id = (select job_id
+		from employees
+		where employee_id = 141)
+and salary > (select salary
+		from employees
+		where employee_id = 141);
+
+
+
+[54]
+최소월급을 받은 사원들의 정보를 출력해주세요.
+
+[Answer]
+select *
+from employees
+where salary = (select min(salary)
+		from employees);
+
+
+
+[55]
+평균 급여가 가장 낮은 job_id를 찾아주세요.
+
+[Answer]
+select job_id, avg(salary)
+from employees
+group by job_id
+having avg(salary) = (select min(avg(salary))
+			from employees
+			group by job_id);
+
+
+## 그룹함수를 중첩하면, 그 앞에 개별컬럼을 쓰면 오류남
+## having avg(salary) = (select min(avg(salary)) 에서 "="인 이유는 서브쿼리의 'min' 때문에 '단일값'이 나오기 때문에 '단일비교연산자'를 사용한 것임
+## having 절 : 그룹함수를 제한하는 절
+## 서브쿼리는 where절과 having절 모두에 쓸 수 있다.
+
+
+
+[56]
+부서별로 최소 급여자들을 출력해주세요.
+
+[Answer]
+select *
+from employees
+where salary in (select min(salary)	
+		from employees
+		group by department_id);
+
+## 서브쿼리에서 여러개의 값이 나왔기 때문에 in을 써야함, "=" 쓰면 오류나옴
+
+
+
+[57]
+last_name에 문자 "u"가 포함된 사원과 같은 부서에 근무하는 모든 사원의 employee_id, last_name을 출력하세요.
+
+[Answer]
+select employee_id, last_name
+from employees
+where department_id in (select department_id
+			from employees
+			where last_name like '%u%');
+
+# 서브쿼리가 1족 집합이 아니기 때문에(=값이 여러개이기 때문에 똑같은 부서가 여러번 나옴) join 이용하면 안됨.

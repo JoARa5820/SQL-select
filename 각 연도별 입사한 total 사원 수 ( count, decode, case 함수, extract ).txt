@@ -1,0 +1,73 @@
+[41]
+사원의 총수와 2005년, 2006년, 2007년, 2008년에 입사한 사원의 수 출력하세요.
+ 
+    TOTAL     2005       2006       2007       2008
+  -------- ---------- ---------- ---------- ----------
+    107        29         24         19         11
+
+
+[Answer]
+
+<1번 답>
+# decode 함수 ; to_char(hire_date,'yyyy'):기준값, '2005':비교값, 1:참값 => 따라서 그 1이 sum에 계속 누적해서 더해짐.
+# sum 쓸 때는 누적되기 때문에 조심해야함.
+  1 대신 0을 넣으면 모두 0임, 2 넣으면 한번에 2씩 계속 누적되서 2배 값됨.
+
+select count(*) total,
+sum(decode(to_char(hire_date,'yyyy'),'2005',1)) "2005",
+sum(decode(to_char(hire_date,'yyyy'),'2006',1)) "2006",
+sum(decode(to_char(hire_date,'yyyy'),'2007',1)) "2007",
+sum(decode(to_char(hire_date,'yyyy'),'2008',1)) "2008"
+from employees;
+
+
+<2번 답>
+# count : sum처럼 누적이 아니라 건수이기 때문에 1이 아니라 'X' 같이 뭘 넣던 상관없음.
+
+select count(*) total,
+count(decode(to_char(hire_date,'yyyy'),'2005',2)) "2005",
+count(decode(to_char(hire_date,'yyyy'),'2006',2)) "2006",
+count(decode(to_char(hire_date,'yyyy'),'2007',2)) "2007",
+count(decode(to_char(hire_date,'yyyy'),'2008',2)) "2008"
+from employees;
+
+select count(*) total,
+count(decode(to_char(hire_date,'yyyy'),'2005','r')) "2005",
+count(decode(to_char(hire_date,'yyyy'),'2006','r')) "2006",
+count(decode(to_char(hire_date,'yyyy'),'2007','r')) "2007",
+count(decode(to_char(hire_date,'yyyy'),'2008','r')) "2008"
+from employees;
+
+
+<3번 답>
+# count : sum처럼 누적이 아니라 건수이기 때문에 1이 아니라 'X' 같이 뭘 넣던 상관없음.
+
+select count(*) total,
+count(case to_char(hire_date,'yyyy') when '2005' then 1 end) "2005",
+count(case to_char(hire_date,'yyyy') when '2006' then 1 end) "2006",
+count(case to_char(hire_date,'yyyy') when '2007' then 1 end) "2007",
+count(case to_char(hire_date,'yyyy') when '2008' then 1 end) "2008"
+from employees;
+
+
+<4번 답>
+# 여기서 extract은 숫자로 뽑아내기 때문에 when 뒤에 숫자임. '2005'가 아니라.
+  하지만 위의 to_char의 경우엔 문자로 뽑아내는 것이기 때문에 '2005'처럼 문자를 써줘야함.
+
+select count(*) total,
+count(case extract(year from hire_date) when 2005 then 'X' end) "2005",
+count(case extract(year from hire_date) when 2006 then 'X' end) "2006",
+count(case extract(year from hire_date) when 2007 then 'X' end) "2007",
+count(case extract(year from hire_date) when 2008 then 'X' end) "2008"
+from employees;
+
+
+# 사실 아래처럼 짜는게 108개의 컬럼으로만 만드는거라서 빠르고 좋음.
+# 하지만 현장에선 108번을 4번 돌리는 위의 식을 씀. 표 방향을 돌리려고.
+# 더 좋게 풀려면 inline view 사용하는게 좋음
+# 2005년도에 입사한 데이터(하나의 row)가 2005년도에서 걸려서 끝나는게 아니라, 2005년도에서 ok하고 2006년도~2008년도 계속 비교해봄
+# 하나의 row가 계속 건들임. 즉, 107*4번
+select to_char(hire_date,'yyyy'), count(*)
+from employees
+group by to_char(hire_date,'yyyy')
+order by 1 asc;

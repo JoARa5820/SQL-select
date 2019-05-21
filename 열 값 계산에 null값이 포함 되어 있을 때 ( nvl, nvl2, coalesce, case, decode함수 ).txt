@@ -1,0 +1,52 @@
+[35]
+사원테이블에 연봉을 계산하는 쿼리문을 작성하세요 단, commission_pct 값이 
+null 아니면 (salary*12) + (salary*12*commission_pct) 값이 수행되고
+null 이면 salary * 12 가 수행합니다. 수행 결과는 화면처럼 만드세요.
+(nvl, nvl2,  coalesce, case, decode 함수를 사용하여 각각으로 수행해서 보고서 작성해주세요)
+
+
+LAST_NAME      		SALARY 		COMMISSION_PCT		ANN_SAL
+-------------------- ---------- -------------------------  ------------
+OConnell             	 2600                   	       31200
+Russell                 14000                          .4     235200
+
+
+[Answer]
+
+<nvl>
+select last_name, salary, commission_pct,
+        (salary * 12) + (salary * 12 * nvl(commission_pct,0)) "ANN_SAL"		--# nvl(commission_pct,0) : commission_pct 값이 null이면 0으로 대체
+                                                              			--# nvl(commission_pct,0) : commission_pct 가 숫자타입이기 때문에 0이라는 숫자를 넣은 것임
+from employees;
+
+
+<nvl2>
+select last_name, salary, commission_pct,
+        nvl2(commission_pct , (salary * 12)+(salary * 12 * commission_pct), salary * 12) "ANN_SAL"
+from employees;
+
+
+<coalesce>
+## coalesce((salary * 12) + (salary * 12 * commission_pct) , salary * 12) : 1번식이 null이면 2번식 가라.
+# 1번식 : (salary * 12) + (salary * 12 * commission_pct)
+# 2번식 : salary * 12
+
+select last_name, salary, commission_pct,
+        coalesce((salary * 12) + (salary * 12 * commission_pct) , salary * 12) "ANN_SAL"
+from employees;
+
+
+<case>
+select last_name, salary, commission_pct,
+case
+when commission_pct is null
+then salary * 12
+else (salary * 12) + (salary * 12 * commission_pct)
+end as "ANN_SAL"
+from employees;
+
+
+<decode> # =동일 비교연산자만 사용 가능
+select last_name, salary, commission_pct,
+decode(commission_pct, null, salary*12, (salary * 12) + (salary * 12 * commission_pct)) as "ANN_SAL"
+from employees;

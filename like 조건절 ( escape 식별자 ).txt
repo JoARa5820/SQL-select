@@ -1,0 +1,10 @@
+[12]
+employees 테이블에 있는 데이터 중에 job_id에 SA_ 문자열로 시작되는 사원들의 employee_id, last_name, job_id를 출력하세요.
+
+[Answer]
+select employee_id, last_name, job_id
+from employees
+where job_id like 'SA\_%'escape'\'; --SA_에서 _를 escape 식별자로 사용
+
+--job_id에 SA_% 문자열로 시작되는 사원들의
+--where job_id like 'SA\_\%%'escape'\';

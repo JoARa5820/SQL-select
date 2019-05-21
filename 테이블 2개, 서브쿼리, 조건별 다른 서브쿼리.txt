@@ -1,0 +1,19 @@
+[62]
+전체 평균 급여보다 많은 급여를 받고 last_name에 "u"가 포함된 사원이 있는 부서에서 근무하는 모든 사원의 employee_id, last_name, salary 출력하세요
+
+[Answer]
+select employee_id, last_name, salary
+from employees
+where salary > (select avg(salary) from employees)
+and department_id in(select department_id 
+			from employees 
+			where last_name like '%u%');
+
+
+
+[63] 관리자 사원들의 정보를 출력해주세요 
+
+[Answer]
+select *
+from employees
+where employee_id in (select manager_id from employees);

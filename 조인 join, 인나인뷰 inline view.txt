@@ -1,0 +1,19 @@
+[72]
+사원수가 3명 미만인 부서번호,부서이름,인원수를 출력해주세요.(조인 or 인나인뷰 사용해보기)
+
+[Answer]
+
+# join
+select d.department_id, d.department_name, count(*)
+from departments d join employees e
+on d.department_id = e.department_id
+group by d.department_id, d.department_name
+having count(*) < 3;
+
+# inline view : 1번 답보다 2번 답이 join을 덜하기 때문에 더 좋은 식임.
+select d.department_id, d.department_name, e.cn
+from (select department_id, count(*) cn
+           from employees
+           group by department_id
+           having count(*) < 3) e, departments d
+where d.department_id = e.department_id;

@@ -1,0 +1,12 @@
+[3]
+employees 테이블에서 급여가 2500~3500 인 사원들의 모든 정보를 조회하세요.
+
+[Answer]
+select *
+from employees
+where salary>=2500
+and salary<=3500;
+
+select *
+from employees
+where salary between 2500 and 3500;

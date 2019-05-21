@@ -1,0 +1,27 @@
+[47]
+2006년도에 입사한 사원들의 부서이름별로 급여의 총액, 평균을 출력하세요.
+
+[Answer]
+
+# select 절에 그룹함수 외의 컬럼은 group by절에 써줘야함.
+
+select d.department_name, sum(e.salary), avg(e.salary)
+from employees e join departments d
+on e.department_id = d.department_id
+where e.hire_date between to_date('20060101','yyyymmdd')
+and e.to_date('20061231 23:59:59','yyyymmdd hh24:mi:ss')
+group by d.department_name;
+
+select d.department_name, sum(e.salary) as "Total", avg(e.salary) as "Avg"
+from employees e, departments d
+where e.department_id = d.department_id
+and e.hire_date >= to_date('20060101','yyyymmdd')
+and e.hire_date < to_date('20070101','yyyymmdd')
+group by d.department_name;
+
+select d.department_name, sum(e.salary), avg(e.salary)
+from employees e join departments d
+on e.department_id = d.department_id
+where e.hire_date >= to_date('20060101','yyyymmdd')
+and e.hire_date < to_date('20070101','yyyymmdd')
+group by d.department_name;

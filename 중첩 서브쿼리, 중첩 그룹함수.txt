@@ -1,0 +1,13 @@
+[77]
+사원 채용 수가 가장 많은 요일에 입사한 사원들의 last_name, 요일을 출력해주세요.
+
+[Answer]
+
+select last_name, to_char(hire_date, 'day') day
+from employees
+where to_char(hire_date, 'day') in (select to_char(hire_date, 'day')
+			      	 	 from employees
+					 group by to_char(hire_date, 'day')
+			     	   	 having count(*) = (select max(count(*))
+			                      			from employees
+			                     			group by to_char(hire_date, 'day')));

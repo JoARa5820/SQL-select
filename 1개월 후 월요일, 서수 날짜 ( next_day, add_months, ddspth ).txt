@@ -1,0 +1,21 @@
+[24]
+사원의 employees(사원)테이블에 있는 last_name, hire_date 및 근무 6개월 후 첫번째 월요일에 해당하는 급여 협상 날짜를 표시합니다. 
+열 레이블을 REVIEW로 지정합니다. 
+날짜는 "월요일, the Second of 4, 2007"과 유사한 형식으로 나타나도록 지정합니다.
+
+<화면예>
+LAST_NAME      HIRE_DATE    REVIEW
+-------------------- --------------    ----------------------------------------------------------------------------------------
+Abel                 04/05/11 	월요일, the Fifteenth of 11, 2004
+Ande                08/03/24 	월요일, the Twenty-Ninth of 09, 2008
+Atkinson           05/10/30 	월요일, the First of 05, 2006
+
+
+[Answer]
+select last_name, hire_date, to_char(next_day(add_months(hire_date,6),'월요일'),'day, "the" Ddspth "of" mm, yyyy') "REVIEW"
+from employees
+order by last_name asc, to_char(hire_date-1,'d');
+
+
+# ddspth로 쓰면 fifteenth로 나오고 Ddspth로 쓰면 Fifteenth로 나옴.
+# 중간중간에 "띄어쓰기"나 "콤마"는 ' ' 안에 그대로 써주면 되고 글짜 써주고 싶으면 "the"처럼 " " 안에 써주면 됨.

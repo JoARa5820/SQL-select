@@ -1,0 +1,13 @@
+[4]
+관리자의 사원번호가 100,101,200인 사원들의 모든 정보를 출력해주세요.
+
+[Answer]
+select *
+from employees
+where manager_id=100
+or manager_id=101
+or manager_id=200;
+
+select *
+from employees
+where manager_id in(100,101,200);

@@ -1,0 +1,41 @@
+[39]
+입사한 년도별로 급여의 총액을 출력하세요.
+
+[Answer]
+select to_char(hire_date,'yyyy'), sum(salary)
+from employees
+group by to_char(hire_date,'yyyy')
+order by 1 asc;
+
+select extract(year from hire_date), sum(salary)
+from employees
+group by extract(year from hire_date)
+order by 1 asc;
+
+# extract : year를 숫자형식으로 뽑아냄.
+
+
+
+[40]
+입사한 달별 인원수를 출력해주세요.
+
+[Answer]
+select to_char(hire_date,'mm'), count(*)
+from employees
+group by to_char(hire_date,'mm')
+order by 1 asc;
+
+
+<주의사항>
+# 이렇게 year를 써버리면 글자라서 연별로 정렬을 할 수 없음.
+select to_char(hire_date,'year'), sum(salary)
+from employees
+group by to_char(hire_date,'year')
+order by 1 asc;
+->출력값이 two thousand eight, two thousand five, two thousand four 이런식으로 나오기 때문.
+
+# 이렇게 month를 써버리면 글자라서 월별로 정렬을 할 수 없음.
+select to_char(hire_date,'month'), count(*)
+from employees
+group by to_char(hire_date,'month')
+order by to_char(hire_date,'month') asc;

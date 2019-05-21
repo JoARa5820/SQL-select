@@ -1,0 +1,15 @@
+[26]
+짝수달에 입사한 사원의 정보를 조회하세요.
+
+[Answer]
+select *
+from employees
+where mod(to_number(to_char(hire_date,'mm')),2)=0;
+
+select employee_id, last_name, hire_date
+from employees
+where hire_date between to_date('20060101','yyyymmdd')
+and to_date('20061231 23:59:59','yyyymmdd hh24:mi:ss')
+and mod(to_number(to_char(hire_date,'mm')),2)=1;
+
+# to_number : char->number 형 변환 함수

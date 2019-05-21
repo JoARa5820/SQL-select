@@ -1,0 +1,24 @@
+[28]
+아래 화면의 결과처럼 사원의  last_name,  salary, salary 값을 1000당 별표를 하나를 출력하는 query문을 작성하세요. 
+
+LAST_NAME      SALARY STAR
+-------------------- ---------- --------------------------------------------------
+King                   26400   **************************
+Kochhar              18700   ******************
+De Haan              17000   *****************
+.....
+
+
+[Answer]
+select last_name, salary, lpad('*',trunc(salary/1000),'*') "STAR"
+from employees
+order by salary desc;
+
+select last_name, salary, rpad(' ',trunc(salary/1000)+1,'*') "STAR"
+from employees
+order by salary desc;
+
+
+## trunc : 절삭한다.
+## rpad(salary, 10, '*')
+## rpad : salary 값을 10자리로 고정시키고, 오른쪽의 공백을 놔두지말고 *을 찍어버리자.

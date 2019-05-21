@@ -1,0 +1,18 @@
+[83]
+job_id가  ST_CLERK 을 포함하지 않는 '부서에 대한' department_id를 출력해주세요.
+
+[Answer]
+
+--# 이렇게 풀면 안됨. minus
+select department_id
+from departments
+minus --# 위 아래의 위치를 바꾸면 또 결과값이 달라짐
+select department_id
+from employees
+where job_id = 'ST_CLERK';
+
+
+--# 이렇게 풀어야함, 현장에서 not exists, exists 많이 씀
+select department_id
+from departments d  --## 사원 테이블로 하면 결과가 중복되서 나오고, 사원이 들어가있지 않은 부서는 나오지 않음 (중복행 제거는 distinct 사용)
+where not exists (select 'x' from employees where department_id = d.department_id and job_id = 'ST_CLERK');

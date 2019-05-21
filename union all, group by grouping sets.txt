@@ -1,0 +1,23 @@
+[87]
+1.department_id, manager_id 기준 급여 총합
+2.department_id, job_id 기준 급여 총합
+1,2 한꺼번에 출력해주세요
+
+[Answer]
+
+--# 얘 대신 grouping sets 연산자 사용
+select department_id, manager_id, null, sum(salary)
+from employees
+group by department_id, manager_id
+union all
+select department_id, null, job_id, sum(salary)
+from employees
+group by department_id, job_id;
+
+
+## grouping sets 연산자
+내가 직접 원하는 그룹을 만들때 사용
+
+select department_id, manager_id, job_id, sum(salary)
+from employees
+group by grouping sets((department_id,manager_id),(department_id, job_id));   --## 소괄호 안에 내가 원하는 그룹 만들기

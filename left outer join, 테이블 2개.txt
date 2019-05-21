@@ -1,0 +1,11 @@
+[42]
+모든 사원의 last_name, department_id, department_name을 표시하기 위한 query 를 작성합니다.
+
+[Answer]
+select e.last_name, d.department_id, d.department_name
+from employees e, departments d
+where e.department_id = d.department_id(+);
+
+select e.last_name, d.department_id, d.department_name
+from employees e left outer join departments d
+on e.department_id = d.department_id;

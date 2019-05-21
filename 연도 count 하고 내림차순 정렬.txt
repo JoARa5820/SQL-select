@@ -1,0 +1,28 @@
+[37]
+2008년도에 입사한 사원들의 job_id별 인원수를 구하고 인원수가 많은 순으로 출력하세요. 
+
+JOB_ID     COUNT(*)
+---------- ---------------
+SA_REP            6 
+SH_CLERK          2 
+ST_CLERK          2 
+SA_MAN            1 
+
+
+[Answer]
+
+<1>
+select job_id, count(*)
+from employees
+where hire_date >= to_date('20080101','yyyymmdd')
+and hire_date < to_date('20090101','yyyymmdd')
+group by job_id
+order by 2 desc;
+
+<2>
+select job_id, count(*)
+from employees
+where hire_date between to_date('20080101 00:00:00','yyyymmdd hh24:mi:ss')
+and to_date('20081231 23:59:59','yyyymmdd hh24:mi:ss')
+group by job_id
+order by count(*) desc;

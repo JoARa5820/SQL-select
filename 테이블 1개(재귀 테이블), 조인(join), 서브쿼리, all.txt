@@ -1,0 +1,74 @@
+[59]
+King에게 보고하는 모든 사원의 last_name 및 salary 출력하세요. (조인, 서브쿼리)
+
+[Answer]
+SELECT e.last_name, e.salary
+FROM employees e, employees k
+WHERE e.manager_id = k.employee_id
+AND k.last_name = 'King';	
+
+SELECT last_name, salary
+FROM employees
+WHERE manager_id IN
+(select employee_id
+from employees 
+where last_name like 'King'); # 사원의 매니저 아이디가 킹의 사원아이디인 것
+
+
+
+[60]
+부서이름(department_name) 이 Executive 부서의 모든 사원에 대한 department_id, last_name, job_id 출력하세요.
+
+[Answer]
+select department_id, last_name, job_id
+from employees
+where department_id = (select department_id
+			from departments
+			where department_name = 'Executive');
+
+select e.department_id, e.last_name, e.job_id
+from employees e join departments d
+on e.department_id = d.department_id
+where d.department_name = 'Executive';
+
+
+
+[61]
+60번 부서에 소속된 모든 사원의 급여(salary)보다 높은(max) 급여를 받는 모든 사원 출력하세요.
+
+[Answer]
+select *
+from employees
+where salary > all
+(select salary
+from employees
+where department_id = 60);
+
+select *
+from employees
+where salary > (select max(salary) from employees where department_id = 60);
+
+[65]
+last_name에 Davies 사원보다 늦게 입사한 사원 중에 급여가 Davies 사원의 급여 이하로 받고 있는 사원들을 출력해주세요.
+
+[Answer]
+select *
+from employees
+where hire_date >
+(select hire_date
+from employees
+where last_name = 'Davies') ## Davies가 한명뿐이기 때문에 단일행 비교연산자를 사용할 수 있었지만, 아닐 경우는 any나 all을 생각해보자
+and salary <=
+(select salary
+from employees
+where last_name = 'Davies');
+
+
+## 조인 사용하기
+## non-equi join(범위)과 비슷함.
+
+select e.*
+from employees e, employees davies
+where davies.last_name = 'Davies'
+and davies.hire_date < e.hire_date
+and davies.salary >= e.salary;

@@ -1,0 +1,11 @@
+[25]
+employees(사원) 테이블에서 일요일에 입사한 사원의 정보를 조회하세요.
+
+[Answer]
+select *
+from employees
+where to_char(hire_date,'d')=1;
+
+select *
+from employees
+where to_char(hire_date,'Day')='일요일';

@@ -1,0 +1,23 @@
+[45]
+last_name에 a(소문자)가 포함된 모든 사원의 last_name, department_name 을 표시하기 위한 query 를 작성합니다.
+
+[Answer]
+select e.last_name, d.department_name
+from employees e, departments d
+where e.department_id = d.department_id(+)
+and e.last_name like '%a%';
+
+select e.last_name, d.department_name
+from employees e left outer join departments d
+on e.department_id = d.department_id
+where e.last_name like '%a%';
+
+select e.last_name, d.department_name
+from employees e, departments d
+where e.department_id = d.department_id(+)
+and instr(e.last_name,'a') >= 1;
+
+select e.last_name, d.department_name
+from employees e left outer join departments d
+on e.department_id = d.department_id
+where instr(e.last_name,'a') >= 1;

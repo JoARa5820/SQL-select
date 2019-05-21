@@ -1,0 +1,27 @@
+상호 관련 서브쿼리 (correlated subquery), 상관서브쿼리
+## : 메인쿼리의 컬럼이 서브쿼리 안에 들어가 있는 경우
+
+[66]
+자신의 부서 평균 급여보다 더 많은 급여를 받는 사원들의 정보를 출력해주세요.
+
+[Answer]
+
+select *
+from employees o
+where o.salary > (select avg(salary)
+from employees
+where department_id = o.department_id);
+
+
+
+[67]
+두번 이상 job_id를 바꾼 사원들의 정보를 출력해주세요.
+
+[Answer]
+
+select * 			# "o.*" 로 써줘도 됨
+from employees o
+where 2 <= (select count(*) from job_history where employee_id = o.employee_id);
+
+
+## from 절의 테이블이 하나가 아닌 경우엔 * 앞에 어떤 테이블의 모든 정보를 보는 것인지 써줘야함, from절의 테이블이 하나인 경우엔 안써줘도 됨
